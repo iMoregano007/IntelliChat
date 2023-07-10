@@ -31,7 +31,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    TextView welcomeTextView;
+    TextView welcomeTextView, clearBtn;
     EditText messageEditText;
     ImageButton sendButton;
     List<Message> messageList;
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         messageList = new ArrayList<>();
 
+        clearBtn = findViewById(R.id.clearBtn);
+        clearBtn.setEnabled(false);
         recyclerView = findViewById(R.id.recycler_view);
         welcomeTextView = findViewById(R.id.welcome_text);
         messageEditText = findViewById(R.id.message_editText);
@@ -67,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
             messageEditText.setText("");
             callAPI(question);
             welcomeTextView.setVisibility(View.GONE);
+            clearBtn.setEnabled(true);
+        });
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                messageList.clear();
+                welcomeTextView.setVisibility(View.VISIBLE);
+                clearBtn.setEnabled(false);
+            }
         });
 
     }
