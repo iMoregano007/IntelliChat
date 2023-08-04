@@ -3,6 +3,10 @@
     <style name="Base.Theme.IntelliChat" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryColor</item>
+        <item name="android:statusBarColor" tools:targetApi='l' >@color/primaryColor</item>
+
     </style>
 
     <style name="Theme.IntelliChat" parent="Base.Theme.IntelliChat" />
