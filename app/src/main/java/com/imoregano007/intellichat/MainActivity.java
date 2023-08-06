@@ -106,18 +106,24 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
 
         try {
-            jsonBody.put("model","text-davinci-003");
-            jsonBody.put("prompt", question);
-            jsonBody.put("max_tokens",40);
-            jsonBody.put("temperature",0);
+           jsonBody.put("model","gpt-3.5-turbo");
+
+           JSONArray messageArr = new JSONArray();
+           JSONObject obj = new JSONObject();
+           obj.put("role","user");
+           obj.put("content",question);
+           messageArr.put(obj);
+
+           jsonBody.put("messages",messageArr);
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
-                .url("https://api.openai.com/v1/completions")
-                .header("Authorization","Bearer --api_key--")
+                .url("https://api.openai.com/v1/chat/completions")
+                .header("Authorization","Bearer ---api key---")
                 .post(body)
                 .build();
 
@@ -134,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
-                        String result = jsonArray.getJSONObject(0).getString("text");
+                        String result = jsonArray.getJSONObject(0)
+                                        .getJSONObject("message")
+                                                .getString("content");
                         addResponse(result.trim());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
